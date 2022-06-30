@@ -52,7 +52,7 @@ var statsCmd = &cobra.Command{
 		fmt.Printf("   Time since start: %s\n", durafmt.Parse(stats.TimeSinceStart.Round(time.Minute)).LimitToUnit("days"))
 		fmt.Printf("             Period: %s\n", durafmt.Parse(act.Period.Duration()))
 		fmt.Printf("    Elapsed Periods: %d\n", stats.ElapsedPeriods)
-		fmt.Printf("      Total Records: %d\n", stats.TotalRecords)
+		fmt.Printf("      Total Fulfils: %d\n", stats.TotalFulfils)
 		fmt.Printf(" Completion Percent: %.2f%%\n", stats.CompletionPercent)
 
 	},

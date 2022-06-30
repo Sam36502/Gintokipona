@@ -7,7 +7,7 @@ import (
 type ActionStats struct {
 	Action            *Action
 	TimeSinceStart    time.Duration
-	TotalRecords      int
+	TotalFulfils      int
 	ElapsedPeriods    int
 	CompletionPercent float32
 }
@@ -19,7 +19,7 @@ const (
 func (r *RecordFile) GetActionStats(act *Action) ActionStats {
 	stats := ActionStats{
 		Action:       act,
-		TotalRecords: 0,
+		TotalFulfils: 0,
 	}
 
 	// Calculate time since start
@@ -28,7 +28,7 @@ func (r *RecordFile) GetActionStats(act *Action) ActionStats {
 	// Count records
 	for _, r := range r.RecordList {
 		if r.ActionName == act.Name {
-			stats.TotalRecords++
+			stats.TotalFulfils += r.Amount
 		}
 	}
 
@@ -36,7 +36,7 @@ func (r *RecordFile) GetActionStats(act *Action) ActionStats {
 	stats.ElapsedPeriods = int(stats.TimeSinceStart.Nanoseconds() / act.Period.Duration().Nanoseconds())
 
 	// Calculate completion
-	stats.CompletionPercent = (float32(stats.TotalRecords) / float32(stats.ElapsedPeriods)) * 100
+	stats.CompletionPercent = (float32(stats.TotalFulfils) / float32(stats.ElapsedPeriods)) * 100
 
 	return stats
 }
