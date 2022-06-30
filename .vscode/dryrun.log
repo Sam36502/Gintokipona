@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/sam/fun/Gintokipona'
+GOOS=windows go build -o ./bin/win/ginpona.exe main.go
+make: Leaving directory '/home/sam/fun/Gintokipona'
+ 

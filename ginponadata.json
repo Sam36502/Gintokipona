@@ -2,22 +2,20 @@
     "actions": [
         {
             "name":"tp-vocab",
-            "participants":[
-                "weeb"
-            ],
             "period":"72h",
-            "start_date":"2022-06-29"
+            "start_date":"2022-01-30"
         },
         {
             "name":"gintama",
-            "participants":[
-                "weeb",
-                "furry"
-            ],
             "period":"24h",
-            "start_date":"2022-06-29"
+            "start_date":"2022-03-29"
         }
     ],
     "records": [
+        {
+            "action":"gintama",
+            "time":"2022-06-29",
+            "amount": 2
+        }
     ]
 }

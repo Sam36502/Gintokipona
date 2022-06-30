@@ -11,8 +11,8 @@ import (
 // statsCmd represents the stats command
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "Shows a list of all actions and participants.",
-	Long:  `Shows a list of all actions and participants.`,
+	Short: "Shows a list of all actions.",
+	Long:  `Shows a list of all actions.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		rec, err := recording.LoadRecords(recording.DEFAULT_RECORD_FILENAME)
 		if err != nil {
@@ -20,13 +20,8 @@ var listCmd = &cobra.Command{
 		}
 
 		fmt.Println("Actions:")
-		for _, a := range rec.GetActionNames() {
-			fmt.Printf("    %s\n", a)
-		}
-
-		fmt.Println("Participants:")
-		for _, p := range rec.GetParticipants() {
-			fmt.Printf("    %s\n", p)
+		for _, a := range rec.ActionList {
+			fmt.Printf("    %s\n", a.Name)
 		}
 	},
 }

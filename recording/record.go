@@ -2,7 +2,6 @@ package recording
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 	"time"
 )
@@ -13,15 +12,15 @@ type RecordFile struct {
 }
 
 type Action struct {
-	Name         string       `json:"name"`
-	Participants []string     `json:"participants"`
-	Period       JSONDuration `json:"period"`
-	StartDate    JSONTime     `json:"start_date"`
+	Name      string       `json:"name"`
+	Period    JSONDuration `json:"period"`
+	StartDate JSONTime     `json:"start_date"`
 }
 
 type Record struct {
 	ActionName string   `json:"action"`
 	Time       JSONTime `json:"time"`
+	Amount     int      `json:"amount"`
 }
 
 type JSONTime time.Time
@@ -30,7 +29,7 @@ type JSONDuration time.Duration
 // Implement Marshaler and Unmarshaler interface for time wrapper
 func (j *JSONTime) UnmarshalJSON(b []byte) error {
 	s := strings.Trim(string(b), "\"")
-	t, err := time.Parse("2006-01-02", s)
+	t, err := time.ParseInLocation("2006-01-02", s, time.Local)
 	if err != nil {
 		return err
 	}
@@ -41,6 +40,10 @@ func (j *JSONTime) UnmarshalJSON(b []byte) error {
 func (j JSONTime) MarshalJSON() ([]byte, error) {
 	t := fmt.Sprint(time.Time(j))
 	return []byte(t), nil
+}
+
+func (j JSONTime) Time() time.Time {
+	return time.Time(j)
 }
 
 // Implement Marshaler and Unmarshaler interface for duration wrapper
@@ -59,27 +62,18 @@ func (j JSONDuration) MarshalJSON() ([]byte, error) {
 	return []byte(d), nil
 }
 
-func (r *RecordFile) GetActionNames() []string {
-	actions := []string{}
-	for _, a := range r.ActionList {
-		actions = append(actions, a.Name)
-	}
-	sort.Strings(actions)
-	return actions
+func (j JSONDuration) Duration() time.Duration {
+	return time.Duration(j)
 }
 
-func (r *RecordFile) GetParticipants() []string {
-	partmap := map[string]bool{}
+// Gets an action from the file by its name
+// Returns nil if action not found
+func (r *RecordFile) GetActionByName(name string) *Action {
 	for _, a := range r.ActionList {
-		for _, p := range a.Participants {
-			partmap[p] = true
+		if a.Name == name {
+			return &a
 		}
 	}
-	participants := make([]string, 0)
-	for p := range partmap {
-		participants = append(participants, p)
-	}
 
-	sort.Strings(participants)
-	return participants
+	return nil
 }
