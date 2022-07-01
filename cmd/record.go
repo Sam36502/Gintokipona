@@ -61,6 +61,4 @@ func init() {
 	rootCmd.AddCommand(recordCmd)
 
 	// Record Flags
-	// like so:
-	// recordCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

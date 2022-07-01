@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	ACTION_FLAG = "action"
+	RENDER_FLAG = "render"
 )
 
 // statsCmd represents the stats command
@@ -55,6 +55,16 @@ var statsCmd = &cobra.Command{
 		fmt.Printf("      Total Fulfils: %d\n", stats.TotalFulfils)
 		fmt.Printf(" Completion Percent: %.2f%%\n", stats.CompletionPercent)
 
+		// Generate graphs if option set
+		if cmd.Flag(RENDER_FLAG).Changed {
+			fmt.Println("\nGenerating Graphs...")
+
+			recording.CreateBarChart(rec, act)
+
+			fmt.Println("Done!")
+
+		}
+
 	},
 }
 
@@ -62,5 +72,5 @@ func init() {
 	rootCmd.AddCommand(statsCmd)
 
 	// Stats Flags
-	statsCmd.Flags().StringP(ACTION_FLAG, "a", "", "Which action to fetch the stats of")
+	statsCmd.Flags().BoolP(RENDER_FLAG, "r", false, "Creates some HTML graphs for the statistics")
 }

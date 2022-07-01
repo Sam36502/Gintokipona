@@ -1,5 +1,8 @@
 {
-	"actions":[{"name":"tp-vocab","period":"72h0m0s","start_date":"2022-01-29"},{"name":"gintama","period":"24h0m0s","start_date":"2022-01-29"}],
+	"actions":[
+        {"name":"tp-vocab","period":"72h0m0s","start_date":"2022-01-29"},
+        {"name":"gintama","period":"24h0m0s","start_date":"2022-01-29"}
+    ],
 "records":[
 	{
 		"action":"gintama",
@@ -205,10 +208,6 @@
 		"action":"gintama",
 		"time":"2022-06-29",
 		"amount":3
-	},{
-		"action":"gintama",
-		"time":"2022-06-30",
-		"amount":1
 	}
 ]
 }
